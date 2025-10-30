@@ -2,6 +2,7 @@ import NavBar from "./NavBar";
 import styles from "./Header.module.css";
 import UserIcon from "../assets/UserIcon";
 import BagIcon from "../assets/BagIcon";
+import { Link } from "react-router-dom"; 
 
 function Header() {
   return (
@@ -10,7 +11,10 @@ function Header() {
       <NavBar />
       <div className={styles.icons}>
         <UserIcon />
-        <BagIcon />
+        {/* 👇 Hacemos que el ícono del carrito lleve a la ruta /carrito */}
+        <Link to="/carrito">
+          <BagIcon />
+        </Link>
       </div>
     </header>
   );

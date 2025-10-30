@@ -16,7 +16,7 @@ import RutaProtegida from "./components/RutaProtegida"
 import Login from './pages/Login'
 
 function App() {
-  const [estaAutenticado, setEstaAutenticado] = useState(false)
+  const [estaAutenticado, setEstaAutenticado] = useState(true)
 
   const iniciarSesion = () => setEstaAutenticado(true)
   const cerrarSesion = () => setEstaAutenticado(false)
