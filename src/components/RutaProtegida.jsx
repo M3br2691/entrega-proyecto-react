@@ -1,8 +1,10 @@
 import { Navigate } from "react-router-dom";
 
-export default function RutaProtegida({ estaAutenticado, children }) {
+function RutaProtegida({ estaAutenticado, children }) {
   if (!estaAutenticado) {
     return <Navigate to="/login" replace/>
   }
   return children;
 }
+
+export default RutaProtegida;

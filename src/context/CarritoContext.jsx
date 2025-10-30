@@ -29,3 +29,5 @@ export function CarritoProvider({ children }) {
 
   </CarritoContext.Provider>);
 }
+
+export default CarritoContext;

@@ -18,7 +18,6 @@ import Login from './pages/Login'
 function App() {
   const [estaAutenticado, setEstaAutenticado] = useState(true)
 
-  const iniciarSesion = () => setEstaAutenticado(true)
   const cerrarSesion = () => setEstaAutenticado(false)
 
   return (

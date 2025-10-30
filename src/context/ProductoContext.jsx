@@ -14,3 +14,5 @@ return(<ProductoContext.Provider value ={{producto, agregarProducto, eliminarPro
 
 </ProductoContext.Provider>);
 }
+
+export default ProductoContext;

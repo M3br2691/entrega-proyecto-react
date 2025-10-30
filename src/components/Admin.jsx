@@ -1,5 +1,5 @@
 
-export default function Admin() {
+function Admin() {
   return (
     <div>
        <div style={{ padding: "20px" }}></div>
@@ -13,3 +13,4 @@ export default function Admin() {
 }
 
 
+export default Admin;
