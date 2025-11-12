@@ -7,7 +7,7 @@ export default function Tecnologia() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("https://fakestoreapi.com/products/category/electronics")
+    fetch("https://68ed80abdf2025af78005de3.mockapi.io/productos")
       .then(res => res.json())
       .then(data => {
         setProductos(data);
@@ -28,9 +28,9 @@ export default function Tecnologia() {
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "20px" }}>
         {productos.map((producto) => (
           <div key={producto.id} style={{ border: "1px solid #ccc", padding: "10px", borderRadius: "10px" }}>
-            <img src={producto.image} alt={producto.title} style={{ width: "100px", height: "100px", objectFit: "contain" }} />
-            <h4>{producto.title}</h4>
-            <p>${producto.price}</p>
+            <img src={producto.imagen} alt={producto.nombre} style={{ width: "100px", height: "100px", objectFit: "contain" }} />
+            <h4>{producto.nombre}</h4>
+            <p>${producto.precio}</p>
             <Link to={`/producto/${producto.id}`}>Ver detalles</Link>
           </div>
         ))}

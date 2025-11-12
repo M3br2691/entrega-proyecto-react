@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
-import styles from "./NavBar.module.css";
+import styles from "./navbar.module.css";
 
 const NavBar = () => {
   return (
+    
     <nav className={styles.nav}>
       <ul className={styles.lista}>
         <li className={styles.item}>

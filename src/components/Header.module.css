@@ -1,31 +1,40 @@
+/* asegura que ocupe visualmente todo el ancho del viewport */
 .header {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw; /* desplaza para "salirse" del contenedor centrado */
+  margin-right: -50vw;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #11d131;
   padding: 15px 30px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  z-index: 1000;
 }
-
-.logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #333;
-}
-
-.icons {
+.iconoDeCarrito {
+  position: relative;
   display: flex;
-  gap: 15px;
   align-items: center;
+  gap: 8px;
 }
 
-.icons svg {
-  width: 25px;
-  height: 25px;
-  cursor: pointer;
-  transition: transform 0.2s ease;
+.icono {
+  width: 24px;
+  height: 24px;
 }
 
-.icons svg:hover {
-  transform: scale(1.1);
+.contadorDeCarrito {
+  position: absolute;
+  top: -8px; 
+  right: -8px;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  padding: 2px 5px;
+  border-radius: 50%;
+  
 }

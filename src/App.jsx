@@ -14,38 +14,36 @@ import Indumentaria from './pages/Indumentaria'
 import Admin from './components/Admin'
 import RutaProtegida from "./components/RutaProtegida"
 import Login from './pages/Login'
+import { AuthProvider } from './context/AuthContext';
+
+
+
+
 
 function App() {
-  const [estaAutenticado, setEstaAutenticado] = useState(true)
-
-  const cerrarSesion = () => setEstaAutenticado(false)
+  
 
   return (
     <>
-      <header>
+         <AuthProvider>
         <Header />
-        {
-          estaAutenticado
-            ? <button onClick={cerrarSesion}>Cerrar Sesión</button>
-            : <button onClick={iniciarSesion}>Iniciar Sesión</button>
-        }
-      </header>
-
-      <main>
+     
         <Routes>
           <Route path="/" element={<Inicio />} />
-          <Route path="/productos" element={<Productos />} />
-          <Route path="/producto/:id" element={<ProductoDetalle />} />
+         
+         
           <Route path="/tecnologia" element={<Tecnologia />} />
           <Route path="/indumentaria" element={<Indumentaria />} />
+          <Route path='/login' element={<Login />} />
+           <Route path="/producto/:id" element={<ProductoDetalle />} />
           <Route path="/acerca" element={<Acerca />} />
           <Route path="/politica" element={<Politica />} />
 
-          {/* Ruta protegida para el carrito */}
+          {/* Ruta protegida para Carrito */}
           <Route
             path="/carrito"
             element={
-              <RutaProtegida estaAutenticado={estaAutenticado}>
+              <RutaProtegida>
                 <Carrito />
               </RutaProtegida>
             }
@@ -55,21 +53,22 @@ function App() {
           <Route
             path="/admin"
             element={
-              <RutaProtegida estaAutenticado={estaAutenticado}>
+              <RutaProtegida>
                 <Admin />
               </RutaProtegida>
             }
           />
-          <Route path="/login" element={<Login />} />
-
+          
         </Routes>
-      </main>
+      
 
       <footer>
         <Footer />
       </footer>
+      </AuthProvider>
     </>
   )
 }
 
-export default App
+export default App;
+

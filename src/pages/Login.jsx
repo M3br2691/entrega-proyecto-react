@@ -5,7 +5,6 @@ import { useAuthContext } from '../context/AuthContext';
 const Login = () => {
   const [usuario, setUsuario] = useState('');
   const [password, setPassword] = useState('');
-
   const { login } = useAuthContext();
   const navigate = useNavigate();
 
@@ -23,7 +22,7 @@ const Login = () => {
     <>
       <form onSubmit={handleSubmit}>
         <h2>Iniciar sesión</h2>
-        <label htmlFor="">Usuario</label>
+        <label>Usuario:</label>
         {/* Aquí está el formulario */}
         <input
           type="text"
@@ -31,9 +30,9 @@ const Login = () => {
           onChange={(evento) => setUsuario(evento.target.value)}
         />
 
-        <label htmlFor=''>Contraseña:</label>
+        <label>Contraseña:</label>
         <input
-          type="text"
+          type="password"
           value={password}
           onChange={(evento) => setPassword(evento.target.value)}
         />
