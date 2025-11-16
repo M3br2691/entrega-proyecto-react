@@ -15,14 +15,13 @@ const Header = () => {
 
   return (
     <header className={styles.header}>
-      {/* Logo */}
+   
       <div className={styles.logo}>Mi Tienda</div>
 
-      {/* Navegación principal */}
-      {/*no voy a poner lo mismo que el profe puso aquí porque ya tengo hecho el css para el navban después lo reviso si no sale bien*/}
+     
       <NavBar />
 
-      {/* Íconos de usuario y carrito */}
+      
       <div className={styles.icons}>
         {estaLogueado ?
           <button onClick={logout} className={styles.login}>Cerrar Sesión </button>
