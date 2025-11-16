@@ -12,7 +12,7 @@ const GestionProducto = () => {
     const [productoSeleccionado, setProductoSeleccionado] = useState(null);
     const [cargando, setCargando] = useState(true);
 
-    //Paso 1: crear un estado para controlar la visibilidad del formularioEste estado nos permitirá “encender” o “apagar” el formulario.
+    //Paso 1: creagitr un estado para controlar la visibilidad del formularioEste estado nos permitirá “encender” o “apagar” el formulario.
     const [mostrarFormulario, setMostrarFormulario] = useState(false);
 
     useEffect(() => {
