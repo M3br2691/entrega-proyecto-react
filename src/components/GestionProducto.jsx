@@ -41,7 +41,8 @@ const GestionProducto = () => {
 
     if (cargando)
         return <div>... cargando productos...</div>
-
+{/* La llevo para el ProductoContext
+    
     // función para agregar productos a la API
 
     const agregarProducto = async (producto) => {
@@ -68,7 +69,7 @@ const GestionProducto = () => {
             alert("Hubo un problema al agregar el producto.");
         }
     };
-
+*/}
     // función para eliminar un producto
 
     const eliminarProducto = async (id) => {

@@ -1,3 +1,5 @@
+
+
 import { useState, useEffect } from "react";
 
 
@@ -40,11 +42,20 @@ const EditarProducto = ({ productoSeleccionado, onActualizar }) => {
 
             if (!respuesta.ok) throw new Error("Error al actualizar el producto");
 
-            const datos = await respuesta.json();
+            {/*    const datos = await respuesta.json();
             onActualizar(datos);
             setProductoSeleccionado(null);
+            alert("Producto actualizado correctamente.");*/}
+
+            const datos = await respuesta.json();
+            onActualizar(datos);
+            setProducto({
+                nombre: '',
+                precio: '',
+                descripcion: '',
+                imagen: ''
+            });
             alert("Producto actualizado correctamente.");
-           
 
 
 
@@ -115,3 +126,4 @@ const EditarProducto = ({ productoSeleccionado, onActualizar }) => {
 }
 
 export default EditarProducto;
+

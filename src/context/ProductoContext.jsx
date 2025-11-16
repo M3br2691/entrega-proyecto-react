@@ -1,18 +1,133 @@
-import { createContext, useState } from "react";
-// Primero creamos el contexto
+import { useState, useEffect, createContext, useContext } from 'react';
+
 export const ProductoContext = createContext();
 
-// ahora creamos el proveedor del contexto
+export const ProductoProvider = ({ children }) => {
+  const [productos, setProductos] = useState([]);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState(null);
+  
+    const API = "https://68ed80abdf2025af78005de3.mockapi.io/productos";
 
-export function ProductoProvider ({ children}) {
-    const [producto, setProducto] = useState([]);
-    
+  
+  // Cargar productos al montar el componente
+  useEffect(() => {
+    cargarProductos();
+  }, []);
 
-    
-  // 3️⃣ Retornamos el Provider con los valores que queremos compartir
-return(<ProductoContext.Provider value ={{producto, agregarProducto, eliminarProducto}}> {children}
+  const cargarProductos = async () => {
+    try {
+      setCargando(true);
+      setError(null);
+      
+      const respuesta = await fetch(API);
+      
+      if (!respuesta.ok) 
+        throw new Error(`Error HTTP: ${respuesta.status}`);
+      
+      const datos = await respuesta.json();
+      setProductos(datos);
 
-</ProductoContext.Provider>);
-}
+    } catch (error) {
+      console.error("Error al cargar productos:", error);
+      setError(error.message || "Error al cargar los productos");
 
-export default ProductoContext;
+    } finally {
+      setCargando(false);
+    }
+  };
+
+  // Funcion para agregar el producto a la API
+  const agregarProducto = async (producto) => {
+    try {
+      setError(null);
+
+      const respuesta = await fetch(API, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(producto),
+      });
+      const nuevoProducto = await respuesta.json();
+      console.log("Producto agregado: ", nuevoProducto);
+      
+      if (!respuesta.ok) 
+        throw new Error(`Error HTTP: ${respuesta.status}`);
+
+      //Agregar el nuevo producto a la lista
+      setProductos([...productos, nuevoProducto]);
+
+    } catch (error) {
+      console.error("Error al agregar:", error);
+      const mensajeError = "Hubo un problema al agregar el producto.";
+      setError(mensajeError);
+    }
+  };
+
+  const editarProducto = async (producto) => {
+    try {
+      setError(null);
+
+      const respuesta = await fetch(`${API}/${producto.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(producto),
+      });
+
+      if (!respuesta.ok) 
+        throw new Error(`Error HTTP: ${respuesta.status}`);
+
+      const productoActualizado = await respuesta.json();
+      setProductos(productos.map(p => 
+        p.id === productoActualizado.id ? productoActualizado : p
+      ));
+
+    } catch (error) {
+      console.error("Error al editar:", error);
+      const mensajeError = "Hubo un problema al editar el producto.";
+      setError(mensajeError);
+    }
+  };
+
+   // Funcion para eliminar producto de la API
+  const eliminarProducto = async (id) => {
+    const confirmar = window.confirm("¿Estás seguro de eliminar?");
+
+    if (confirmar) {
+      try {
+        setError(null);
+
+        const respuesta = await fetch(`${API}/${id}`, {
+            method: "DELETE",
+          }
+        );
+
+        if (!respuesta.ok) 
+          throw new Error("Error al eliminar");  
+
+        // Filtra y crea un nuevo array sin el producto eliminado
+        setProductos(productos.filter(p => p.id !== id));
+      } 
+      catch (error) {
+      console.error(error.message);
+      const mensajeError = "Hubo un problema al eliminar el producto.";
+      setError(mensajeError);
+      }
+    }
+  };
+
+  return (
+    <ProductoContext.Provider value={{ 
+      productos,
+      cargando,
+      error, 
+      cargarProductos, 
+      agregarProducto, 
+      editarProducto, 
+      eliminarProducto 
+    }}>
+      {children}
+    </ProductoContext.Provider>
+  );
+};
+
+export const useProductoContext = () => useContext(ProductoContext);
