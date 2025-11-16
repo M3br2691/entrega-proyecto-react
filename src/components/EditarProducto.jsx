@@ -42,11 +42,7 @@ const EditarProducto = ({ productoSeleccionado, onActualizar }) => {
 
             if (!respuesta.ok) throw new Error("Error al actualizar el producto");
 
-            {/*    const datos = await respuesta.json();
-            onActualizar(datos);
-            setProductoSeleccionado(null);
-            alert("Producto actualizado correctamente.");*/}
-
+           
             const datos = await respuesta.json();
             onActualizar(datos);
             setProducto({

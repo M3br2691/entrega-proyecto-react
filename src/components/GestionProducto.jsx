@@ -73,7 +73,9 @@ const GestionProducto = () => {
                                     </p>
 
 
-                                    {/* Botones para editar y eliminar este producto */}
+                                    {/* 
+                                    Botones para editar y eliminar este producto 
+                                    */}
                                     <button
                                         className={styles.boton}
                                         onClick={() => abrirFormularioEditar(producto)}
@@ -95,7 +97,9 @@ const GestionProducto = () => {
                 {/* Modal - Formulario condicional */}
                 {mostrarForm && (
                     <>
-                        {/* Pasar los props correctos según el modo */}
+                        {/* 
+                        Pasar los props correctos según el modo 
+                        */}
                         <FormProducto
                             productoInicial={productoSeleccionado || {}}
                             modo={modoFormulario}

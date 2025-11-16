@@ -115,16 +115,16 @@ const FormProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }) => {
                 ></textarea>
               </div>
             </div>
-            {/* Botones de Accion */}
+           
             <div className={styles.modalActions}>
-              {/* Boton Primario */}
+           
               <button 
                 type="submit" 
                 className={`${styles.btnBase} ${styles.btnPrimary}`}
               >
                 {modo === "agregar" ? <>Agregar</> : <>Actualizar</>}
               </button>
-              {/* Boton Secundario o de cancelar */}
+            
               <button 
                 type="button" 
                 onClick={onCerrar}
