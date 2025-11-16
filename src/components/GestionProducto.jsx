@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import styles from './GestionProducto.module.css'
+import styles from './gestionProducto.module.css'
 import CirclePlus from "../assets/CirclePlus";
 import FormProducto from "./FormProducto";
 import EditarProducto from "./EditarProducto";
