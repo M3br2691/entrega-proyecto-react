@@ -41,35 +41,6 @@ const GestionProducto = () => {
 
     if (cargando)
         return <div>... cargando productos...</div>
-{/* La llevo para el ProductoContext
-    
-    // función para agregar productos a la API
-
-    const agregarProducto = async (producto) => {
-        try {
-            const respuesta = await fetch(API, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(producto)
-            });
-
-            if (!respuesta.ok) throw new Error("Error al agregar el producto.");
-
-            const datos = await respuesta.json();
-            console.log("Producto agregado: ", datos);
-            alert("Producto agregado correctamente");
-
-            // agregar el nuevo producto a la lista
-            setProductos([...productos, datos]);
-
-        } catch (error) {
-            console.error(error.message);
-            alert("Hubo un problema al agregar el producto.");
-        }
-    };
-*/}
     // función para eliminar un producto
 
     const eliminarProducto = async (id) => {
@@ -104,10 +75,7 @@ const GestionProducto = () => {
         <div>
             <div className={styles.container}>
                 <div className={styles.panel}>
-                    {/* <div className={styles.botonAgregarProducto}>
-                    <CirclePlus />
-                    <p>Agregar Producto</p>
-                </div>*/}
+
                     <div className={styles.botonAgregarProducto} onClick={alternarFormulario}>
                         <CirclePlus />
                         <p>{mostrarFormulario ? "Ocultar formulario" : "Agregar Producto"}</p>
@@ -125,9 +93,10 @@ const GestionProducto = () => {
                         </div>
                     ))}
                 </div>
-                {/*Formulario para editar producto*/}
+             
+          
                 <div className={styles.panel}>
-                   {/* <FormProducto onAgregar={agregarProducto} />*/}
+                
                    {mostrarFormulario && <FormProducto onAgregar={agregarProducto} />}
                     <EditarProducto
                         productoSeleccionado={productoSeleccionado}
