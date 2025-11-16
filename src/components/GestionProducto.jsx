@@ -46,9 +46,7 @@ const GestionProducto = () => {
             <div className={styles.panel}>
                 <div className={styles.cabecera}>
                     <h2>Lista de Productos</h2>
-                    {/* 
-                    Botón para agregar producto 
-                    */}
+
                     <button
                         onClick={abrirFormularioAgregar}
                         className={styles.botonAgregar}
@@ -57,9 +55,7 @@ const GestionProducto = () => {
                         <p>Agregar Producto</p>
                     </button>
                 </div>
-                {/* 
-                Lista de productos 
-                */}
+
                 <div>
                     {productos.length === 0 ? (
                         <p>No hay productos</p>
@@ -77,9 +73,6 @@ const GestionProducto = () => {
                                     </p>
 
 
-                                    {/* 
-                                    Botones para editar y eliminar este producto 
-                                    */}
                                     <button
                                         className={styles.boton}
                                         onClick={() => abrirFormularioEditar(producto)}
@@ -98,14 +91,10 @@ const GestionProducto = () => {
                     )}
                 </div>
 
-                {/* 
-                Modal - Formulario condicional 
-                */}
+
                 {mostrarForm && (
                     <>
-                        {/* 
-                        Pasar los props correctos según el modo 
-                        */}
+
                         <FormProducto
                             productoInicial={productoSeleccionado || {}}
                             modo={modoFormulario}
