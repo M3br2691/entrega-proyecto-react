@@ -1,114 +1,111 @@
-import { useEffect } from "react";
-import { useState } from "react";
-import styles from './gestionproducto.module.css'
-import CirclePlus from "../assets/CirclePlus";
+import { useState, useEffect } from "react";
 import FormProducto from "./FormProducto";
-import EditarProducto from "./EditarProducto";
-
+import { useProductoContext } from "../context/ProductoContext";
+import styles from "./gestionproducto.module.css";
+import CirclePlus from "../assets/CirclePlus";
+import SquarePen from "../assets/SquarePen";
+import TrashIcon from "../assets/TrashIcon";
 
 const GestionProducto = () => {
-    const API = "https://68ed80abdf2025af78005de3.mockapi.io/productos";
-    const [productos, setProductos] = useState([]);
+    // Cargando contexto de producto
+    const { productos, eliminarProducto } = useProductoContext();
+    // Estados 
+    const [mostrarForm, setMostrarForm] = useState(false);
+    const [modoFormulario, setModoFormulario] = useState("agregar");
     const [productoSeleccionado, setProductoSeleccionado] = useState(null);
-    const [cargando, setCargando] = useState(true);
 
-    //Paso 1: creagitr un estado para controlar la visibilidad del formularioEste estado nos permitirá “encender” o “apagar” el formulario.
-    const [mostrarFormulario, setMostrarFormulario] = useState(false);
-
-    useEffect(() => {
-        cargarProductos();
-    }, []);
-
-    const cargarProductos = async () => {
-        try {
-            setCargando(true);
-            const respuesta = await fetch(API)
-            const datos = await respuesta.json();
-            setProductos(datos);
-        } catch (error) {
-            console.error("Error al cargar productos:", error);
-            alert("Error al cargar productos");
-        }
-        finally {
-            setCargando(false);
-        }
+    // Abrir formulario para AGREGAR
+    const abrirFormularioAgregar = () => {
+        setModoFormulario("agregar");
+        setProductoSeleccionado(null); // Sin producto inicial
+        setMostrarForm(true);
     };
 
-    // función para seleccionar un producto
-    const seleccionarProducto = (producto) => {
-        setProductoSeleccionado(producto);
+    // Abrir formulario para EDITAR
+    const abrirFormularioEditar = (producto) => {
+        setModoFormulario("editar");
+        setProductoSeleccionado(producto); // Pasar el producto a editar
+        setMostrarForm(true);
     };
 
-    if (cargando)
-        return <div>... cargando productos...</div>
-    // función para eliminar un producto
-
-    const eliminarProducto = async (id) => {
-        const confirmar = window.confirm("¿Estás seguro de querer eliminar este producto?");
-
-        if (confirmar) {
-            try {
-                const respuesta = await fetch(`${API}/${id}`, {
-                    method: "DELETE",
-                });
-
-                if (!respuesta.ok)
-                    throw new Error("Error al eliminar el producto");
-
-                // Filtra y crea un nuevo array sin el producto eliminado
-
-                setProductos(productos.filter(p => p.id !== id));
-
-            }
-            catch (error) {
-                console.error(error.message);
-                alert("Hubo un problema al eliminar el producto.");
-            }
-        }
+    // Cerrar formulario
+    const cerrarFormulario = () => {
+        setMostrarForm(false);
+        setProductoSeleccionado(null);
     };
-    // paso 2 de mostrar formulario
-    const alternarFormulario = () => {
-        setMostrarFormulario(!mostrarFormulario);
-    };
+
+    const formatoPrecio = (valor) =>
+        new Intl.NumberFormat("en-US", {
+            style: "currency",
+            currency: "ARS",
+            minimumFractionDigits: 2,
+        }).format(valor);
 
     return (
-        <div>
-            <div className={styles.container}>
-                <div className={styles.panel}>
-
-                    <div className={styles.botonAgregarProducto} onClick={alternarFormulario}>
+        <div className={styles.container}>
+            <div className={styles.panel}>
+                <div className={styles.cabecera}>
+                    <h2>Lista de Productos</h2>
+                    {/* Botón para agregar producto */}
+                    <button
+                        onClick={abrirFormularioAgregar}
+                        className={styles.botonAgregar}
+                    >
                         <CirclePlus />
-                        <p>{mostrarFormulario ? "Ocultar formulario" : "Agregar Producto"}</p>
-                    </div>
-                    {productos.map((producto) => (
-                        <div
-                            key={producto.id}
-                            onClick={() => seleccionarProducto(producto)}
-                            className={styles.productoItem}
-                        >
-                            <img className={styles.imagen} src={producto.imagen} alt={producto.nombre} />
-                            <h3>{producto.nombre}</h3>
-                            <p>Precio: ${producto.precio}</p>
-                            <button onClick={() => eliminarProducto(producto.id)}>Eliminar</button>
+                        <p>Agregar Producto</p>
+                    </button>
+                </div>
+                {/* Lista de productos */}
+                <div>
+                    {productos.length === 0 ? (
+                        <p>No hay productos</p>
+                    ) : (
+                        <div style={{ display: "grid", gap: "5px" }}>
+                            {productos.map((producto) => (
+                                <div
+                                    key={producto.id}
+                                    className={styles.productoItem}
+                                >
+                                    <img className={styles.imagen} src={producto.imagen} alt={producto.nombre} />
+                                    <h3 className={styles.nombreProducto}>{producto.nombre}</h3>
+                                    <p className={styles.precioProducto}>
+                                        {formatoPrecio(producto.precio)}
+                                    </p>
+
+
+                                    {/* Botones para editar y eliminar este producto */}
+                                    <button
+                                        className={styles.boton}
+                                        onClick={() => abrirFormularioEditar(producto)}
+                                    >
+                                        <SquarePen />
+                                    </button>
+                                    <button
+                                        className={styles.boton}
+                                        onClick={() => eliminarProducto(producto.id)}
+                                    >
+                                        <TrashIcon />
+                                    </button>
+                                </div>
+                            ))}
                         </div>
-                    ))}
+                    )}
                 </div>
-             
-          
-                <div className={styles.panel}>
-                
-                   {mostrarFormulario && <FormProducto onAgregar={agregarProducto} />}
-                    <EditarProducto
-                        productoSeleccionado={productoSeleccionado}
-                        onActualizar={cargarProductos}
-                    />
-                </div>
+
+                {/* Modal - Formulario condicional */}
+                {mostrarForm && (
+                    <>
+                        {/* Pasar los props correctos según el modo */}
+                        <FormProducto
+                            productoInicial={productoSeleccionado || {}}
+                            modo={modoFormulario}
+                            onCerrar={cerrarFormulario}
+                        />
+                    </>
+                )}
             </div>
         </div>
-
     );
 };
-
-
 
 export default GestionProducto;

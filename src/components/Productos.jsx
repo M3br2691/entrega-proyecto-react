@@ -25,7 +25,7 @@ const Productos = () => {
           <div key={producto.id} style={{ border: "1px solid #ccc", borderRadius: "10px", padding: "10px", textAlign: "center", backgroundColor: "#f8f8f8" }}>
             <img src={producto.imagen} alt={producto.nombre} style={{ width: "100px", height: "100px", objectFit: "contain" }} />
             <h4>{producto.nombre}</h4>
-            <p>${formatoNumero.format(producto.precio)} ARS</p>
+            <p>ARS {formatoNumero.format(producto.precio)} `</p>
 
             <button onClick={() => agregarAlCarrito(producto)}>Agregar</button>
             <div style={{ marginTop: "10px" }}>

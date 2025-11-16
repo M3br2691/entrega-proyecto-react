@@ -3,7 +3,12 @@ import { createContext, useState, useContext } from 'react';
 
 const AuthContext = createContext();
 export function AuthProvider({ children }) {
-  const [usuario, setUsuario] = useState(null);
+ // const [usuario, setUsuario] = useState(null);
+
+  const [usuario, setUsuario] = useState(() => {
+  const token = localStorage.getItem('authToken'); // Busca si hay token guardado
+  return token ? token.split('-')[2] : null;       // Extrae el nombre de usuario si existe
+});
 
 
   const login = (username) => {

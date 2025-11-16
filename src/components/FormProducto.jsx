@@ -1,113 +1,143 @@
 import { useState } from "react";
+import { useProductoContext } from "../context/ProductoContext";
+import styles from "./formproducto.module.css";
+import X from "../assets/X";
 
+const FormProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }) => {
+  
+  const [producto, setProducto] = useState(productoInicial);
+  const { agregarProducto, editarProducto } = useProductoContext();
 
+  const handleChange = (evento) => {
+    const { name, value } = evento.target;
+    setProducto({ ...producto, [name]: value });
+  };
 
-const FormProducto = ({ onAgregar }) => {
-    const [errores, setErrores] = useState({});
-    const [producto, setProducto] = useState({
-        nombre: '',
-        precio: '',
-        descripcion: '',
-        imagen: '',
-    });
-
-    const handleChange = (evento) => {
-        const { name, value } = evento.target;
-        setProducto({ ...producto, [name]: value });
-    };
-
-
-    const validarForm = () => {
-        const nuevosErrores = {};
-
-        if (!producto.nombre.trim())
-            nuevosErrores.nombre = "Obligatoriamente debe colocar el nombre"
-
-        if (!producto.precio || producto.precio < 0)
-            nuevosErrores.precio = "Debe colocar un precio mayor o igual a cero"
-
-        if (!producto.descripcion.trim () || producto.descripcion.length < 10)
-            nuevosErrores.descripcion = "La descripción debe tener al menos 10 caracteres"
-
-        if (!producto.imagen.trim() || producto.imagen.length < 6)
-            nuevosErrores.imagen = "Debes subir una URL de una imagen válida";
-
-        setErrores(nuevosErrores);
-        return Object.keys(nuevosErrores).length === 0;
-    };
-
-    const handleSubmit = (evento) => {
-        evento.preventDefault();
-
-        if (!validarForm())
-            return;
-
-        const productoAEnviar = {
-            ...producto,
-            precio: parseFloat(producto.precio)
-        };
-
-        onAgregar(productoAEnviar);
-        // limpiamos el formulario
-        setProducto({ nombre: '', precio: '', descripcion: '', imagen: '' });
-        setErrores({});
+  const handleSubmit = async (evento) => {
+    evento.preventDefault();
+    if (modo === "agregar") {
+      await agregarProducto(producto);
+    } else {
+      await editarProducto(producto);
     }
-    return (
-        <>
-            <form onSubmit={handleSubmit}>
-                <h2>Agregar Producto</h2>
-                <div>
-                    <label>Nombre: </label>
-                    <br />
-                    <input
-                        type="text"
-                        name="nombre"
-                        value={producto.nombre}
-                        onChange={handleChange}
-                    />
-                    {errores.nombre && <p style={{ color: "red" }}>{errores.nombre}</p>}
-                </div>
+    onCerrar();
+  };
 
-                <div>
-                    <label>Precio:</label>
-                    <br />
-                    <input
-                        type="number"
-                        name="precio"
-                        value={producto.precio}
-                        onChange={handleChange}
-                        min={0}
-                        step="any"
-                    />
-                    {errores.precio && <p style={{ color: "red" }}>{errores.precio}</p>}
-                </div>
-                <div>
-                    <label>Descripcion:</label>
-                    <br />
-                    <textarea
-                        name='descripcion'
-                        value={producto.descripcion}
-                        onChange={handleChange}
-                    />
-                    {errores.descripcion && <p style={{ color: 'red' }}>{errores.descripcion}</p>}
-                </div>
-                <div>
-                    <label>URL de Imagen:</label>
-                    <br />
-                    <input
-                        type='text'
-                        name='imagen'
-                        value={producto.imagen}
-                        onChange={handleChange}
-                    />
-                    {errores.imagen && <p style={{ color: 'red' }}>{errores.imagen}</p>}
-                </div>
-                <button type="submit">Agregar Producto</button>
-            </form>
-        </>
-    );
-
+  return (
+    <div 
+      className={styles.modalOverlay}
+      aria-modal="true"
+      role="dialog"
+    >
+      <div className={styles.modalContainer}>
+        {/* Contenido del Modal */}
+        <div className={styles.modalContent}>   
+          {/* Encabezado del Modal */}
+          <div className={styles.modalHeader}>
+            <h3 className={styles.modalHeaderTitle}>
+              {modo === "agregar" ? "Agregar Producto" : "Editar Producto"}
+            </h3>
+            <button 
+              type="button" 
+              onClick={onCerrar}
+              className={styles.closeButton}
+            >
+              <X />
+            </button>
+          </div>
+          {/* Cuerpo del Modal */}
+          <form onSubmit={handleSubmit}>
+            <div className={styles.formGrid}>
+              {/* Campo Nombre */}
+              <div className={styles.colSpan2}>
+                <label className={styles.formLabel}>
+                  Nombre
+                </label>
+                <input
+                  type="text"
+                  name="nombre"
+                  id="nombre"
+                  className={styles.formInputBase}
+                  placeholder="Ingrese el nombre del producto"
+                  value={producto.nombre || ""}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              {/* Campo Precio */}
+              <div className={`${styles.colSpan2} ${styles.smColSpan1}`}>
+                <label className={styles.formLabel}>
+                  Precio
+                </label>
+                <input
+                  type="number"
+                  name="precio"
+                  id="precio"
+                  className={styles.formInputBase}
+                  placeholder="$0.00"
+                  value={producto.precio || ""}
+                  onChange={handleChange}
+                  required
+                  min="0"
+                  step="any"
+                />
+              </div>
+              
+              {/* Campo URL de Imagen */}
+              <div className={`${styles.colSpan2} ${styles.smColSpan1}`}>
+                <label className={styles.formLabel}>
+                  URL de Imagen
+                </label>
+                <input
+                  type="text"
+                  name="imagen"
+                  id="imagen"
+                  className={styles.formInputBase}
+                  placeholder="https://ejemplo.com/imagen.jpg"
+                  value={producto.imagen || ""}
+                  onChange={handleChange}
+                />
+              </div>
+              {/* Campo Descripcion */}
+              <div className={styles.colSpan2}>
+                <label className={styles.formLabel}>
+                  Descripción del Producto
+                </label>
+                <textarea
+                  id="descripcion"
+                  name="descripcion"
+                  rows="4"
+                  className={styles.formInputBase}
+                  placeholder="Escriba la descripción del producto aquí"
+                  value={producto.descripcion || ""}
+                  onChange={handleChange}
+                  required
+                ></textarea>
+              </div>
+            </div>
+            {/* Botones de Accion */}
+            <div className={styles.modalActions}>
+              {/* Boton Primario */}
+              <button 
+                type="submit" 
+                className={`${styles.btnBase} ${styles.btnPrimary}`}
+              >
+                {modo === "agregar" ? <>Agregar</> : <>Actualizar</>}
+              </button>
+              {/* Boton Secundario o de cancelar */}
+              <button 
+                type="button" 
+                onClick={onCerrar}
+                className={`${styles.btnBase} ${styles.btnSecondary}`}
+              >
+                Cancelar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
 }
-
 
 export default FormProducto;

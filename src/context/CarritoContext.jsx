@@ -1,33 +1,44 @@
-import { createContext, useState } from "react";
-// Primero creamos el contexto
+import { createContext, useState, useEffect } from "react";
+
 export const CarritoContext = createContext();
 
-// ahora creamos el proveedor del contexto
-
 export function CarritoProvider({ children }) {
-  const [carrito, setCarrito] = useState([]);
-  // Agregar un producto al carrito
-  const agregarAlCarrito = (producto) => { setCarrito([...carrito, producto]); };
+
+  // 👉 Cargar carrito desde localStorage al iniciar
+  const [carrito, setCarrito] = useState(() => {
+    const guardado = localStorage.getItem("carrito");
+    return guardado ? JSON.parse(guardado) : [];
+  });
+
+  // 👉 Guardar carrito en localStorage cada vez que cambia
+  useEffect(() => {
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+  }, [carrito]);
+
+  const agregarAlCarrito = (producto) => {
+    setCarrito([...carrito, producto]);
+  };
 
   const eliminarDelCarrito = (indiceAEliminar) => {
     setCarrito(carrito.filter((_, indice) => indice !== indiceAEliminar));
-  }
+  };
 
-  // Vaciar el carrito completo
-  const vaciarCarrito = () => { setCarrito([]); }
+  const vaciarCarrito = () => {
+    setCarrito([]);
+  };
 
-  // 3️⃣ Retornamos el Provider con los valores que queremos compartir
-  return (<CarritoContext.Provider value={
-    {
-      carrito,
-      agregarAlCarrito,
-      eliminarDelCarrito,
-      vaciarCarrito
-    }
-  }>
-    {children}
-
-  </CarritoContext.Provider>);
+  return (
+    <CarritoContext.Provider
+      value={{
+        carrito,
+        agregarAlCarrito,
+        eliminarDelCarrito,
+        vaciarCarrito
+      }}
+    >
+      {children}
+    </CarritoContext.Provider>
+  );
 }
 
 export default CarritoContext;
