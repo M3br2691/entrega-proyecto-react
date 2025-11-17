@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import NavBar from "./NavBar";
-import styles from "./header.module.css";
+import styles from "./headerStyles.module.css";
 import UserIcon from "../assets/UserIcon";
 import BagIcon from "../assets/BagIcon";
 import { Link } from "react-router-dom";
@@ -17,6 +17,7 @@ const Header = () => {
     <header className={styles.header}>
    
       <div className={styles.logo}>Mi Tienda</div>
+
 
      
       <NavBar />
