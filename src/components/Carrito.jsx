@@ -8,7 +8,6 @@ const Carrito = () => {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
   });
-
   return (
     <div style={{ padding: "20px" }}>
       <h2 style={{ textAlign: "center" }}>Carrito</h2>
@@ -42,10 +41,8 @@ const Carrito = () => {
                 marginBottom: "10px"
               }}
             />
-
             <h4>{producto.nombre}</h4>
             <p>ARS {formatoNumero.format(producto.precio)} </p>
-
             <button onClick={() => eliminarDelCarrito(indice)}>
               Eliminar
             </button>
