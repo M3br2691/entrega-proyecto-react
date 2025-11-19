@@ -22,7 +22,7 @@ const Carrito = () => {
       >
         {carrito.map((producto, indice) => (
           <div
-            key={producto.id + "-" + indice}
+            key={`${producto.id}-${indice}`}
             style={{
               border: "1px solid #ccc",
               borderRadius: "10px",

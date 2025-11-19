@@ -59,9 +59,9 @@ const GestionProducto = () => {
                         <p>No hay productos</p>
                     ) : (
                         <div style={{ display: "grid", gap: "5px" }}>
-                            {productos.map((producto) => (
+                            {productos.map((producto, indice) => (
                                 <div
-                                    key={producto.id}
+                                    key={`${producto.id}-${indice}`}
                                     className={styles.productoItem}
                                 >
                                     <img className={styles.imagen} src={producto.imagen} alt={producto.nombre} />

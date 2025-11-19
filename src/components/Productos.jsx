@@ -21,8 +21,9 @@ const Productos = () => {
     <div style={{ padding: "20px" }}>
       <h2>Productos</h2>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "20px" }}>
-        {productos.map((producto) => (
-          <div key={producto.id} style={{ border: "1px solid #ccc", borderRadius: "10px", padding: "10px", textAlign: "center", backgroundColor: "#f8f8f8" }}>
+        {productos.map((producto, indice) => (
+          <div
+            key={`${producto.id}-${indice}`} style={{ border: "1px solid #ccc", borderRadius: "10px", padding: "10px", textAlign: "center", backgroundColor: "#f8f8f8" }}>
             <img src={producto.imagen} alt={producto.nombre} style={{ width: "100px", height: "100px", objectFit: "contain" }} />
             <h4>{producto.nombre}</h4>
             <p>ARS {formatoNumero.format(producto.precio)} `</p>
