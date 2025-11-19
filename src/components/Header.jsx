@@ -17,8 +17,7 @@ const Header = () => {
     <header className={styles.header}>
    
       <div className={styles.logo}>Mi Tienda</div>
-        <p>hasta cuando vamos a seguir así?</p>
-
+        
      
       <NavBar />
 

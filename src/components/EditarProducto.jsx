@@ -122,4 +122,3 @@ const EditarProducto = ({ productoSeleccionado, onActualizar }) => {
 }
 
 export default EditarProducto;
-
