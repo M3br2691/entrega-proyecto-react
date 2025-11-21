@@ -8,6 +8,7 @@ export const ProductoProvider = ({ children }) => {
   const [error, setError] = useState(null);
   
     const API = "https://68ed80abdf2025af78005de3.mockapi.io/productos";
+  
 
   
   // Cargar productos al montar el componente

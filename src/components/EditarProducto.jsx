@@ -8,7 +8,8 @@ const EditarProducto = ({ productoSeleccionado, onActualizar }) => {
         nombre: '',
         precio: '',
         descripcion: '',
-        imagen: ''
+        imagen: '',
+        categoria: ''
     });
 
     const API = "https://68ed80abdf2025af78005de3.mockapi.io/productos";
@@ -37,7 +38,8 @@ const EditarProducto = ({ productoSeleccionado, onActualizar }) => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(producto),
+                body: JSON.stringify({ ...producto, precio: Number(producto.precio) }),
+
             });
 
             if (!respuesta.ok) throw new Error("Error al actualizar el producto");
@@ -49,7 +51,8 @@ const EditarProducto = ({ productoSeleccionado, onActualizar }) => {
                 nombre: '',
                 precio: '',
                 descripcion: '',
-                imagen: ''
+                imagen: '',
+                categoria: ''
             });
             alert("Producto actualizado correctamente.");
 
@@ -113,6 +116,19 @@ const EditarProducto = ({ productoSeleccionado, onActualizar }) => {
                         name='imagen'
                         value={producto.imagen || ''}
                         onChange={handleChange}
+                    />
+
+                </div>
+
+                <div>
+                    <label>Categoria: </label>
+                    <br />
+                    <input
+                        type="text"
+                        name="categoria"
+                        value={producto.categoria || ''}
+                        onChange={handleChange}
+                        required
                     />
 
                 </div>

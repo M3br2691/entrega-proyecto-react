@@ -29,7 +29,7 @@ const Productos = () => {
             <img src={producto.imagen} alt={producto.nombre} style={{ width: "100px", height: "100px", objectFit: "contain" }} />
             <h4>{producto.nombre}</h4>
             <p>ARS {formatoNumero.format(producto.precio)}</p>
-
+            <h4>{producto.categoria}</h4>
             <button
               onClick={() => {
                 if (!usuario) {

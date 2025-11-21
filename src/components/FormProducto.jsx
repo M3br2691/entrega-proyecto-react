@@ -4,7 +4,7 @@ import styles from "./formproducto.module.css";
 import X from "../assets/X";
 
 const FormProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }) => {
-  
+
   const [producto, setProducto] = useState(productoInicial);
   const { agregarProducto, editarProducto } = useProductoContext();
 
@@ -24,21 +24,21 @@ const FormProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }) => {
   };
 
   return (
-    <div 
+    <div
       className={styles.modalOverlay}
       aria-modal="true"
       role="dialog"
     >
       <div className={styles.modalContainer}>
         {/* Contenido del Modal */}
-        <div className={styles.modalContent}>   
+        <div className={styles.modalContent}>
           {/* Encabezado del Modal */}
           <div className={styles.modalHeader}>
             <h3 className={styles.modalHeaderTitle}>
               {modo === "agregar" ? "Agregar Producto" : "Editar Producto"}
             </h3>
-            <button 
-              type="button" 
+            <button
+              type="button"
               onClick={onCerrar}
               className={styles.closeButton}
             >
@@ -82,7 +82,7 @@ const FormProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }) => {
                   step="any"
                 />
               </div>
-              
+
               {/* Campo URL de Imagen */}
               <div className={`${styles.colSpan2} ${styles.smColSpan1}`}>
                 <label className={styles.formLabel}>
@@ -114,19 +114,34 @@ const FormProducto = ({ productoInicial = {}, modo = "agregar", onCerrar }) => {
                   required
                 ></textarea>
               </div>
+              <div className={styles.colSpan2}>
+                <label className={styles.formLabel}>
+                  Categoria
+                </label>
+                <input
+                  type="text"
+                  name="categoria"
+                  id="categoria"
+                  className={styles.formInputBase}
+                  placeholder="Ingrese la categoría del producto"
+                  value={producto.categoria || ""}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
             </div>
-           
+
             <div className={styles.modalActions}>
-           
-              <button 
-                type="submit" 
+
+              <button
+                type="submit"
                 className={`${styles.btnBase} ${styles.btnPrimary}`}
               >
                 {modo === "agregar" ? <>Agregar</> : <>Actualizar</>}
               </button>
-            
-              <button 
-                type="button" 
+
+              <button
+                type="button"
                 onClick={onCerrar}
                 className={`${styles.btnBase} ${styles.btnSecondary}`}
               >
