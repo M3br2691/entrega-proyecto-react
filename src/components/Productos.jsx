@@ -1,13 +1,13 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { CarritoContext } from "../context/CarritoContext";
-import { useContext } from 'react';
 import { useProductoContext } from "../context/ProductoContext";
+import { useAuthContext } from "../context/AuthContext"; // <-- importá esto
 
 const Productos = () => {
-
-
   const { productos, cargando, error } = useProductoContext();
   const { agregarAlCarrito } = useContext(CarritoContext);
+  const { usuario } = useAuthContext(); // <-- obtenés el usuario logueado
 
   if (cargando) return "Cargando productos...";
   if (error) return error;
@@ -23,12 +23,25 @@ const Productos = () => {
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "20px" }}>
         {productos.map((producto, indice) => (
           <div
-            key={`${producto.id}-${indice}`} style={{ border: "1px solid #ccc", borderRadius: "10px", padding: "10px", textAlign: "center", backgroundColor: "#f8f8f8" }}>
+            key={`${producto.id}-${indice}`}
+            style={{ border: "1px solid #ccc", borderRadius: "10px", padding: "10px", textAlign: "center", backgroundColor: "#f8f8f8" }}
+          >
             <img src={producto.imagen} alt={producto.nombre} style={{ width: "100px", height: "100px", objectFit: "contain" }} />
             <h4>{producto.nombre}</h4>
-            <p>ARS {formatoNumero.format(producto.precio)} `</p>
+            <p>ARS {formatoNumero.format(producto.precio)}</p>
 
-            <button onClick={() => agregarAlCarrito(producto)}>Agregar</button>
+            <button
+              onClick={() => {
+                if (!usuario) {
+                  alert("Debes iniciar sesión antes de agregar productos al carrito.");
+                  return;
+                }
+                agregarAlCarrito(producto);
+              }}
+            >
+              Agregar
+            </button>
+
             <div style={{ marginTop: "10px" }}>
               <Link to={`/producto/${producto.id}`}>Ver detalles</Link>
             </div>
@@ -37,6 +50,6 @@ const Productos = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Productos;

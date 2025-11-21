@@ -26,7 +26,7 @@ export default function Indumentaria() {
     <div style={{ padding: "20px" }}>
       <h1>Indumentaria</h1>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "20px" }}>
-        {productos.map((producto) => (
+        {productos.map((producto, indice) => (
           <div key={producto.id + "-" + indice} style={{ border: "1px solid #ccc", padding: "10px", borderRadius: "10px" }}>
             <img src={producto.imagen} alt={producto.nombre} style={{ width: "100px", height: "100px", objectFit: "contain" }} />
             <h4>{producto.nombre}</h4>

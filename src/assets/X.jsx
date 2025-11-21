@@ -10,7 +10,7 @@ const X = () => {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      class="lucide lucide-x-icon lucide-x"
+      className="lucide lucide-x-icon lucide-x"
     >
       <path d="M18 6 6 18" />
       <path d="m6 6 12 12" />

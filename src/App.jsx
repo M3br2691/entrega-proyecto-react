@@ -21,21 +21,21 @@ import { AuthProvider } from './context/AuthContext';
 
 
 function App() {
-  
+
 
   return (
     <>
-         <AuthProvider>
+      <AuthProvider>
         <Header />
-     
+
         <Routes>
           <Route path="/" element={<Inicio />} />
-         
-         
+
+
           <Route path="/tecnologia" element={<Tecnologia />} />
           <Route path="/indumentaria" element={<Indumentaria />} />
           <Route path='/login' element={<Login />} />
-           <Route path="/producto/:id" element={<ProductoDetalle />} />
+          <Route path="/producto/:id" element={<ProductoDetalle />} />
           <Route path="/acerca" element={<Acerca />} />
           <Route path="/politica" element={<Politica />} />
 
@@ -49,26 +49,25 @@ function App() {
             }
           />
 
-          {/* Ruta protegida para Admin */}
           <Route
             path="/admin"
             element={
-              <RutaProtegida>
+              <RutaProtegida requiereAdmin={true}>
                 <Admin />
               </RutaProtegida>
             }
           />
-          
-        </Routes>
-      
 
-      <footer>
-        <Footer />
-      </footer>
+
+        </Routes>
+
+
+        <footer>
+          <Footer />
+        </footer>
       </AuthProvider>
     </>
   )
 }
 
 export default App;
-

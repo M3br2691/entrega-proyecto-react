@@ -10,20 +10,32 @@ const Login = () => {
 
   const handleSubmit = (evento) => {
     evento.preventDefault();
-    // Simulación de autenticación
-    if (usuario === 'admin' && password === '1234') {
-      login(usuario);
-      navigate('/admin');
+
+    // Llamo al login del AuthContext
+    const resultado = login(usuario, password);
+
+    if (resultado.exito) {
+      // Si es admin → va al panel admin
+      if (resultado.usuario === "admin") {
+        navigate('/admin');
+      }
+
+      // Si es cliente → va a la tienda
+      if (resultado.usuario === "cliente") {
+        navigate('/');
+      }
+
     } else {
       alert('Usuario o Contraseña inválido');
     }
   };
+
   return (
     <>
       <form onSubmit={handleSubmit}>
         <h2>Iniciar sesión</h2>
+
         <label>Usuario:</label>
-        {/* Aquí está el formulario */}
         <input
           type="text"
           value={usuario}
@@ -41,5 +53,6 @@ const Login = () => {
       </form>
     </>
   );
-}
+};
+
 export default Login;
