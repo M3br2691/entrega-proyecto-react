@@ -32,7 +32,7 @@ const Login = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="d-flex flex-column flex-md-row justify-content-between align-items-center p-3 bg-warning shadow-sm">
         <h2>Iniciar sesión</h2>
 
         <label>Usuario:</label>
@@ -49,7 +49,7 @@ const Login = () => {
           onChange={(evento) => setPassword(evento.target.value)}
         />
 
-        <button type="submit">Iniciar sesión</button>
+        <button  type="submit">Iniciar sesión</button>
       </form>
     </>
   );

@@ -1,16 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
+import { CarritoContext } from "../context/CarritoContext";
+import { useAuthContext } from "../context/AuthContext";
 
 export default function Indumentaria() {
   const [productos, setProductos] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
 
+  const { agregarAlCarrito } = useContext(CarritoContext);
+  const { usuario } = useAuthContext();
+
   useEffect(() => {
     fetch("https://68ed80abdf2025af78005de3.mockapi.io/productos")
       .then(res => res.json())
       .then(data => {
-        setProductos(data);
+        // Filtrar solo productos de categoría Indumentaria
+        const indumentaria = data.filter(p => p.categoria === "Indumentaria");
+        setProductos(indumentaria);
         setCargando(false);
       })
       .catch(() => {
@@ -22,16 +29,37 @@ export default function Indumentaria() {
   if (cargando) return <p>Cargando indumentaria...</p>;
   if (error) return <p>{error}</p>;
 
+  const formatoNumero = new Intl.NumberFormat("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
+
   return (
     <div style={{ padding: "20px" }}>
       <h1>Indumentaria</h1>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "20px" }}>
         {productos.map((producto, indice) => (
-          <div key={producto.id + "-" + indice} style={{ border: "1px solid #ccc", padding: "10px", borderRadius: "10px" }}>
+          <div key={producto.id + "-" + indice} 
+          style={{ border: "1px solid #ccc", padding: "10px", borderRadius: "10px", textAlign: "center", backgroundColor: "#fff0f5" }}>
             <img src={producto.imagen} alt={producto.nombre} style={{ width: "100px", height: "100px", objectFit: "contain" }} />
             <h4>{producto.nombre}</h4>
-            <p>${producto.precio}</p>
-            <Link to={`/producto/${producto.id}`}>Ver detalles</Link>
+            <p>ARS {formatoNumero.format(producto.precio)}</p>
+            <div style={{ margin: "10px 0" }}>
+              <button
+                onClick={() => {
+                  if (!usuario) {
+                    alert("Debes iniciar sesión antes de agregar productos al carrito.");
+                    return;
+                  }
+                  agregarAlCarrito(producto);
+                }}
+              >
+                Agregar al carrito
+              </button>
+            </div>
+            <Link to={`/producto/${producto.id}`}
+                style={{ textDecoration: "none", color: "blue" }}>Ver detalles</Link>
+            
           </div>
         ))}
       </div>

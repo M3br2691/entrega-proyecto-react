@@ -35,3 +35,9 @@
   padding: 2px 5px;
   border-radius: 50%;
 }
+
+/* en header.module.css o styles.scss */
+.bg-purple {
+  background-color: #6f42c1 !important;
+  color: white;
+}

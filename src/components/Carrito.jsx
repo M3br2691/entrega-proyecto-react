@@ -10,7 +10,7 @@ const Carrito = () => {
   });
   return (
     <div style={{ padding: "20px" }}>
-      <h2 style={{ textAlign: "center" }}>Carrito</h2>
+      <h2 style={{ textAlign: "center", color:"white" }}>Carrito</h2>
 
       <div
         style={{
@@ -28,7 +28,8 @@ const Carrito = () => {
               borderRadius: "10px",
               padding: "15px",
               textAlign: "center",
-              backgroundColor: "#f8f8f8"
+              backgroundColor: "#f8f8f8",
+            
             }}
           >
             <img

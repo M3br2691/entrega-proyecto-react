@@ -24,7 +24,7 @@ const Productos = () => {
         {productos.map((producto, indice) => (
           <div
             key={`${producto.id}-${indice}`}
-            style={{ border: "1px solid #ccc", borderRadius: "10px", padding: "10px", textAlign: "center", backgroundColor: "#f8f8f8" }}
+            style={{ border: "1px solid #ccc", borderRadius: "10px", padding: "10px", textAlign: "center", backgroundColor: "#fff0f5" }}
           >
             <img src={producto.imagen} alt={producto.nombre} style={{ width: "100px", height: "100px", objectFit: "contain" }} />
             <h4>{producto.nombre}</h4>
@@ -43,7 +43,12 @@ const Productos = () => {
             </button>
 
             <div style={{ marginTop: "10px" }}>
-              <Link to={`/producto/${producto.id}`}>Ver detalles</Link>
+              <Link
+                to={`/producto/${producto.id}`}
+                style={{ textDecoration: "none", color: "blue" }}
+              >
+                Ver detalles
+              </Link>
             </div>
           </div>
         ))}

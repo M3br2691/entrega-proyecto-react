@@ -7,7 +7,7 @@ const Footer = () => {
   const anioActual = new Date().getFullYear();
 
   return (
-    <footer className={styles.footer}>
+    <footer className="d-flex justify-content-between align-items-center p-3 bg-danger shadow-sm">
       <ul className={styles.footerNav}>
         <li>
           <Link to="/acerca" className={styles.footerLink}>Acerca de Nosotros</Link>

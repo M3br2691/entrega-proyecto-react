@@ -3,21 +3,20 @@ import styles from "./navbar.module.css";
 import { useAuthContext } from "../context/AuthContext";
 
 const NavBar = () => {
-  const { usuario } = useAuthContext();
+  const { usuario } = useAuthContext();
 
-  return (
-    <nav className={styles.nav}>
-      <ul className={styles.lista}>
-        <li><Link to="/" className={styles.link}>Inicio</Link></li>
-        <li><Link to="/tecnologia" className={styles.link}>Tecnologia</Link></li>
-        <li><Link to="/indumentaria" className={styles.link}>Indumentaria</Link></li>
-
-        {usuario === "admin" && (
-          <li><Link to="/admin" className={styles.link}>Admin</Link></li>
-        )}
-      </ul>
-    </nav>
-  );
+  return (
+<nav>
+  <ul className="navbar-nav d-flex flex-column flex-md-row gap-2">
+    <li className="nav-item"><Link className="nav-link text-white" to="/">Inicio</Link></li>
+    <li className="nav-item"><Link className="nav-link text-white" to="/tecnologia">Tecnología</Link></li>
+    <li className="nav-item"><Link className="nav-link text-white" to="/indumentaria">Indumentaria</Link></li>
+    {usuario === "admin" && (
+      <li className="nav-item"><Link className="nav-link text-white" to="/admin">Admin</Link></li>
+    )}
+  </ul>
+</nav>
+  );
 };
 
 export default NavBar;

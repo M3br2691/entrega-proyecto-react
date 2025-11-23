@@ -16,41 +16,41 @@ const Header = () => {
   const navigate = useNavigate();
 
   return (
-    <header className={styles.header}>
+    <header className="d-flex flex-column flex-md-row justify-content-between align-items-center p-3 bg-danger shadow-sm">
 
-      <div className={styles.logo}>Mi Tienda</div>
+      <div className="logo fs-4 fw-bold text-white">Mi Tienda</div>
 
       <NavBar />
 
-      <div className={styles.icons}>
+      <div className="d-flex align-items-center gap-2">
         {estaLogueado ? (
           <>
-            <span className={styles.saludo}>
-              Hola, {usuario}
-            </span>
+            <span className="text-white me-2">Hola, {usuario}</span>
 
-            <button
-              onClick={() => {
-                logout();
-                navigate("/");
-              }}
-              className={styles.login}
-            >
+
+
+            <button className="btn btn-outline-light btn-sm" onClick={() => { logout(); navigate("/"); }}>
+
+
+
+
+
+
               Cerrar Sesión
             </button>
           </>
         ) : (
-          <Link to="/login">
-            <button className={styles.login}>
-              <UserIcon /> <span>Ingresar</span>
-            </button>
+          <Link to="/login" className="btn btn-outline-light btn-sm d-flex align-items-center gap-1">
+            <UserIcon /> Ingresar
           </Link>
         )}
       </div>
 
+
+
       {estaLogueado && (
         <div className={styles.iconoDeCarrito}>
-          <Link to="/carrito">
+          <Link to="/carrito" style={{ textDecoration: "none", color: "white" }}>
             <BagIcon className={styles.icono} />
             <span>Carrito</span>
             {contadorEnCarrito > 0 && (
