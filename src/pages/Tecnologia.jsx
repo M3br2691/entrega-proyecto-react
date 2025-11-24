@@ -3,7 +3,14 @@ import { Link } from "react-router-dom";
 import { CarritoContext } from "../context/CarritoContext";
 import { useAuthContext } from "../context/AuthContext";
 
+import { FaShoppingCart } from "react-icons/fa";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { BotonCompra } from "../components/StyledComponents";
 export default function Tecnologia() {
+
+
+
   const [productos, setProductos] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
@@ -34,8 +41,17 @@ export default function Tecnologia() {
     maximumFractionDigits: 2
   });
 
+
+
+
+  const handleAddToCart = () => {
+    toast.success("Producto agregado al carrito!");
+  };
+
+
   return (
     <div style={{ padding: "20px" }}>
+      <ToastContainer />
       <h1>Tecnología</h1>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "20px" }}>
         {productos.map((producto, indice) => (
@@ -44,20 +60,21 @@ export default function Tecnologia() {
             <h4>{producto.nombre}</h4>
             <p>ARS {formatoNumero.format(producto.precio)}</p>
             <div style={{ margin: "10px 0" }}>
-              <button
+              <BotonCompra
                 onClick={() => {
                   if (!usuario) {
                     alert("Debes iniciar sesión antes de agregar productos al carrito.");
                     return;
                   }
                   agregarAlCarrito(producto);
+                  handleAddToCart();
                 }}
               >
-                Agregar al carrito
-              </button>
+                <FaShoppingCart /> Comprar
+              </BotonCompra>
             </div>
             <Link to={`/producto/${producto.id}`}
-                style={{ textDecoration: "none", color: "blue" }}>Ver detalles</Link>
+              style={{ textDecoration: "none", color: "blue" }}>Ver detalles</Link>
           </div>
         ))}
       </div>

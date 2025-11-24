@@ -4,6 +4,7 @@ import Productos from '../components/Productos';
 
 import { CarritoContext } from '../context/CarritoContext';
 
+
 const Inicio = () => {
   const {agregarAlCarrito} = useContext(CarritoContext);
   const eliminarDelCarrito = (indiceAEliminar) => {
@@ -13,8 +14,9 @@ const Inicio = () => {
   return(
     <>
       <Productos />
-
+      
     </>
+    
   );
 }
 

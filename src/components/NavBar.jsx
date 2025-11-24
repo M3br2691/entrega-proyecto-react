@@ -7,7 +7,7 @@ const NavBar = () => {
 
   return (
 <nav>
-  <ul className="navbar-nav d-flex flex-column flex-md-row gap-2">
+  <ul className="navbar-nav d-flex flex-column flex-md-row gap-3">
     <li className="nav-item"><Link className="nav-link text-white" to="/">Inicio</Link></li>
     <li className="nav-item"><Link className="nav-link text-white" to="/tecnologia">Tecnología</Link></li>
     <li className="nav-item"><Link className="nav-link text-white" to="/indumentaria">Indumentaria</Link></li>

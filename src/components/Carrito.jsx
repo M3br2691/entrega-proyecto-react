@@ -8,9 +8,10 @@ const Carrito = () => {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
   });
+  
   return (
     <div style={{ padding: "20px" }}>
-      <h2 style={{ textAlign: "center", color:"white" }}>Carrito</h2>
+      <h2 style={{ textAlign: "center", color:"black" }}>Carrito</h2>
 
       <div
         style={{
