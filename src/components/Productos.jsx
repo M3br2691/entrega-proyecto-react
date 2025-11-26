@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { CarritoContext } from "../context/CarritoContext";
 import { useProductoContext } from "../context/ProductoContext";
@@ -7,12 +7,15 @@ import { FaShoppingCart } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Helmet } from "react-helmet-async";
-import { BotonCompra } from "./StyledComponents"; // <-- Importamos el botón desde el archivo compartido
+import { BotonCompra } from "./StyledComponents";
 
 const Productos = () => {
   const { productos, cargando, error } = useProductoContext();
   const { agregarAlCarrito } = useContext(CarritoContext);
   const { usuario } = useAuthContext();
+
+  const [busqueda, setBusqueda] = useState("");
+  const [paginaActual, setPaginaActual] = useState(1);
 
   if (cargando) return "Cargando productos...";
   if (error) return error;
@@ -26,6 +29,22 @@ const Productos = () => {
     toast.success("Producto agregado al carrito!");
   };
 
+  // 🔍 FILTRO DE BÚSQUEDA
+  const productosFiltrados = (productos || []).filter((producto) =>
+    producto.nombre.toLowerCase().includes(busqueda.toLowerCase())
+  );
+
+  // 🧭 PAGINACIÓN (siempre sobre productosFiltrados)
+  const productosPorPagina = 4;
+  const indiceUltimo = paginaActual * productosPorPagina;
+  const indicePrimero = indiceUltimo - productosPorPagina;
+
+  const productosActuales = productosFiltrados.slice(indicePrimero, indiceUltimo);
+
+  const totalPaginas = Math.ceil(productosFiltrados.length / productosPorPagina);
+
+  const cambiarPagina = (n) => setPaginaActual(n);
+
   return (
     <div style={{ padding: "20px" }}>
       <Helmet>
@@ -38,6 +57,19 @@ const Productos = () => {
 
       <ToastContainer />
       <h2>Productos</h2>
+
+      {/* 🔍 INPUT DE BÚSQUEDA */}
+      <input
+        type="text"
+        placeholder="Buscar productos..."
+        className="form-control mb-3"
+        value={busqueda}
+        onChange={(e) => {
+          setBusqueda(e.target.value);
+          setPaginaActual(1); // 🧠 al buscar, volver a página 1
+        }}
+      />
+
       <div
         style={{
           display: "grid",
@@ -45,7 +77,7 @@ const Productos = () => {
           gap: "20px",
         }}
       >
-        {productos.map((producto, indice) => (
+        {productosActuales.map((producto, indice) => (
           <div
             key={`${producto.id}-${indice}`}
             style={{
@@ -61,9 +93,11 @@ const Productos = () => {
               alt={producto.nombre}
               style={{ width: "100px", height: "100px", objectFit: "contain" }}
             />
+
             <h4>{producto.nombre}</h4>
             <p>ARS {formatoNumero.format(producto.precio)}</p>
             <h4>{producto.categoria}</h4>
+
             <BotonCompra
               onClick={() => {
                 if (!usuario) {
@@ -88,6 +122,23 @@ const Productos = () => {
           </div>
         ))}
       </div>
+
+      {/* PAGINADOR */}
+      {totalPaginas > 1 && (
+        <div className="d-flex justify-content-center my-4">
+          {Array.from({ length: totalPaginas }, (_, index) => (
+            <button
+              key={index + 1}
+              className={`btn mx-1 ${
+                paginaActual === index + 1 ? "btn-primary" : "btn-outline-primary"
+              }`}
+              onClick={() => cambiarPagina(index + 1)}
+            >
+              {index + 1}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

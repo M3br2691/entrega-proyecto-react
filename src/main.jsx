@@ -11,14 +11,14 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { HelmetProvider } from "react-helmet-async";
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
+ <StrictMode>
     <BrowserRouter>
       <HelmetProvider>
         <AuthProvider>
           <ProductoProvider>
             <CarritoProvider>
               <App />
-            </CarritoProvider>
+             </CarritoProvider>
           </ProductoProvider>
         </AuthProvider>
       </HelmetProvider>

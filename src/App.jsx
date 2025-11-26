@@ -3,7 +3,7 @@ import './App.css'
 import Header from './components/Header'
 import Carrito from './components/Carrito'
 import Footer from './components/Footer'
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route, useLocation } from "react-router-dom"
 import Productos from "./components/Productos"
 import ProductoDetalle from './pages/ProductoDetalle'
 import Inicio from './pages/Inicio'
@@ -15,63 +15,33 @@ import Admin from './components/Admin'
 import RutaProtegida from "./components/RutaProtegida"
 import Login from './pages/Login'
 import { AuthProvider } from './context/AuthContext';
-
-
-
-
-
+import { SearchProvider } from "./context/SearchContext";
 function App() {
-
+  const location = useLocation();
 
   return (
-
-
     <>
+   
+      <Header />
 
+      <Routes key={location.pathname}>
+        <Route path="/" element={<Inicio />} />
+        <Route path="/tecnologia" element={<Tecnologia />} />
+        <Route path="/indumentaria" element={<Indumentaria />} />
+        <Route path='/login' element={<Login />} />
+        <Route path="/producto/:id" element={<ProductoDetalle />} />
+        <Route path="/acerca" element={<Acerca />} />
+        <Route path="/politica" element={<Politica />} />
 
-      <AuthProvider>
-        <Header />
+        <Route path="/carrito" element={<RutaProtegida><Carrito /></RutaProtegida>} />
+        <Route path="/admin" element={<RutaProtegida requiereAdmin={true}><Admin /></RutaProtegida>} />
+      </Routes>
 
-        <Routes>
-          <Route path="/" element={<Inicio />} />
-
-
-          <Route path="/tecnologia" element={<Tecnologia />} />
-          <Route path="/indumentaria" element={<Indumentaria />} />
-          <Route path='/login' element={<Login />} />
-          <Route path="/producto/:id" element={<ProductoDetalle />} />
-          <Route path="/acerca" element={<Acerca />} />
-          <Route path="/politica" element={<Politica />} />
-
-          {/* Ruta protegida para Carrito */}
-          <Route
-            path="/carrito"
-            element={
-              <RutaProtegida>
-                <Carrito />
-              </RutaProtegida>
-            }
-          />
-
-          <Route
-            path="/admin"
-            element={
-              <RutaProtegida requiereAdmin={true}>
-                <Admin />
-              </RutaProtegida>
-            }
-          />
-
-
-        </Routes>
-
-
-        <footer>
-          <Footer />
-        </footer>
-      </AuthProvider>
+      
+      <Footer />
     </>
   )
 }
+
 
 export default App;
