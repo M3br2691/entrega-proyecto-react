@@ -6,6 +6,7 @@ import { FaShoppingCart } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BotonCompra } from "../components/StyledComponents";
+import { Helmet } from "react-helmet-async";
 
 export default function Tecnologia() {
 
@@ -63,7 +64,13 @@ export default function Tecnologia() {
 
   return (
     <div style={{ padding: "20px" }}>
-
+      <Helmet>
+              <title>Tecnologia | Mi Tienda Online</title>
+              <meta
+                name="description"
+                content="Todos nuestros productos de Tecnología."
+              />
+            </Helmet>
       <ToastContainer />
       <h1>Tecnología</h1>
 

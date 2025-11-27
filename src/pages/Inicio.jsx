@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import Productos from '../components/Productos';
 import { Helmet } from "react-helmet-async";
 import { CarritoContext } from '../context/CarritoContext';
-import AllProductos from '../components/AllProductos';
+
 
 
 const Inicio = () => {
