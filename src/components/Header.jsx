@@ -7,6 +7,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 import CarritoContext from "../context/CarritoContext";
 
+
+
 const Header = () => {
   const { carrito } = useContext(CarritoContext);
   const { usuario, logout } = useAuthContext();
